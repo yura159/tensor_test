@@ -1,0 +1,14 @@
+{
+  "database" : {
+    "user": "postgres",
+    "password": "1111",
+    "host": "localhost",
+    "port": "5432",
+    "name_database": "tensor"
+  },
+  "types_rec" : {
+      "1": ["cities", "id, name"],
+      "2": ["offices", "id, name, id_cities"],
+      "3": ["workers", "id, name, id_offices"]
+  }
+}
