@@ -42,11 +42,12 @@ class Database:
     def add_data(self, path):
         """
         About: метод импортирует данные по организациям в таблицы
-        :param path: информация о сотрудника в json формате
+        :param path: путь до json файла, в котром содержится информация о сотрудниках и организациях
         """
         try:
             json_data = Database._get_json(path)
         except():
+            print("bad path")
             json_data = []
         # если данные из json_text получены успешно, создаем набор запросов на добавление данных в таблицы
         if json_data:
@@ -75,15 +76,6 @@ class Database:
         return "INSERT INTO {} ({}) VALUES ({});".format(name_table, columns, Database._get_values(data, type_rec))
 
     @staticmethod
-    def _get_json(path):
-        """
-        About: парсин json файла
-        :return: json
-        """
-        with open(path, "r", encoding="UTF-8") as json_file:
-            return json.load(json_file)
-
-    @staticmethod
     def _get_values(data, type_rec):
         """
         About: метод перобразовывает добавляемые данные в строковое представление
@@ -94,6 +86,16 @@ class Database:
         rec_id = data.get('id')
         name = data.get('Name')
         parent_id = data.get('ParentId')
-        if type_rec != 1:
-            return "{},{},{}".format(rec_id, name, parent_id)
-        return "{},{}".format(rec_id, name)
+        values = "{},'{}'"
+        if int(type_rec) != 1:
+            values = "{},'{}',{}".format(rec_id, name, parent_id)
+        return values.format(rec_id, name)
+
+    @staticmethod
+    def _get_json(path: str):
+        """
+        About: парсинг json файла
+        :return: json
+        """
+        with open(path, "r", encoding="UTF-8") as json_file:
+            return json.load(json_file)

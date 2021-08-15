@@ -9,10 +9,10 @@ def get_worker(database):
     print("Введите id сотрудника")
     id_workers = int(input())
     workers = database.get_workers(id_workers)
-    print("Сотрудники: ")
+    print("Сотрудники:")
     [print(worker) for worker in workers]
 
 
 my_db = Database()
-# my_db.add_data("data.json")
+# my_db.add_data("data.json") # импортирование данных в бд
 get_worker(my_db)
